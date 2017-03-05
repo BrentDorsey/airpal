@@ -213,7 +213,7 @@ public class AirpalModule extends AbstractModule
         properties.put(SystemSessionProperties.PLAN_WITH_TABLE_NODE_PARTITIONING, config.getPlanWithTableNodePartitioning().toString());
         properties.put(SystemSessionProperties.COLOCATED_JOIN, config.getColocatedJoin().toString());
         properties.put(SystemSessionProperties.REORDER_JOINS, config.getReorderJoins().toString());
-        properties.put(SystemSessionProperties.INITIAL_SPLITS_PER_NODE, config.getInitialSplitsPerNode().toString());
+//        properties.put(SystemSessionProperties.INITIAL_SPLITS_PER_NODE, config.getInitialSplitsPerNode().toString());
         properties.put(SystemSessionProperties.SPLIT_CONCURRENCY_ADJUSTMENT_INTERVAL,
             config.getSplitConcurrencyAdjustmentInterval().toString());
         properties.put(SystemSessionProperties.OPTIMIZE_METADATA_QUERIES, config.getOptimizeMetadataQueries().toString());

@@ -242,10 +242,10 @@ public class AirpalConfiguration extends Configuration
     @JsonProperty
     private Boolean reorderJoins = false;
 
-    @Getter
-    @Setter
-    @JsonProperty
-    private Integer initialSplitsPerNode = null;
+//    @Getter
+//    @Setter
+//    @JsonProperty
+//    private Integer initialSplitsPerNode = null;
 
     @Getter
     @Setter
