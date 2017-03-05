@@ -54,7 +54,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.AmazonS3EncryptionClient;
 import com.amazonaws.services.s3.model.EncryptionMaterialsProvider;
-import com.facebook.presto.SystemSessionProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.google.common.eventbus.AsyncEventBus;
@@ -76,8 +75,6 @@ import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
 import java.net.URI;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -192,48 +189,48 @@ public class AirpalModule extends AbstractModule
     @Singleton
     public ClientSessionFactory provideClientSessionFactory(@Named("coordinator-uri") Provider<URI> uriProvider)
     {
-        final Map<String, String> properties = new HashMap<>();
-        properties.put(SystemSessionProperties.OPTIMIZE_HASH_GENERATION, config.getOptimizeHashGeneration().toString());
-        properties.put(SystemSessionProperties.DISTRIBUTED_JOIN, config.getDistributedJoin().toString());
-        properties.put(SystemSessionProperties.DISTRIBUTED_INDEX_JOIN, config.getDistributedIndexJoin().toString());
-        properties.put(SystemSessionProperties.HASH_PARTITION_COUNT, config.getHashPartitionCount().toString());
-        properties.put(SystemSessionProperties.PREFER_STREAMING_OPERATORS, config.getPreferStreamingOperators().toString());
-        properties.put(SystemSessionProperties.TASK_WRITER_COUNT, config.getTaskWriterCount().toString());
-        properties.put(SystemSessionProperties.TASK_CONCURRENCY, config.getTaskConcurrency().toString());
-        properties.put(SystemSessionProperties.TASK_SHARE_INDEX_LOADING, config.getTaskShareIndexLoading().toString());
-        properties.put(SystemSessionProperties.QUERY_MAX_MEMORY, config.getMaxQueryMemory().toString());
-        properties.put(SystemSessionProperties.QUERY_MAX_RUN_TIME, config.getQueryMaxRunTime().toString());
-        properties.put(SystemSessionProperties.RESOURCE_OVERCOMMIT, config.getResourceOvercommit().toString());
-        properties.put(SystemSessionProperties.QUERY_MAX_CPU_TIME, config.getQueryMaxCpuTime().toString());
-        properties.put(SystemSessionProperties.REDISTRIBUTE_WRITES, config.getRedistributeWrites().toString());
-        properties.put(SystemSessionProperties.PUSH_TABLE_WRITE_THROUGH_UNION, config.getPushTableWriteThroughUnion().toString());
-        properties.put(SystemSessionProperties.EXECUTION_POLICY, config.getExecutionPolicy());
-        properties.put(SystemSessionProperties.PROCESSING_OPTIMIZATION, config.getProcessingOptimization());
-        properties.put(SystemSessionProperties.DICTIONARY_AGGREGATION, config.getDictionaryAggregation().toString());
-        properties.put(SystemSessionProperties.PLAN_WITH_TABLE_NODE_PARTITIONING, config.getPlanWithTableNodePartitioning().toString());
-        properties.put(SystemSessionProperties.COLOCATED_JOIN, config.getColocatedJoin().toString());
-        properties.put(SystemSessionProperties.REORDER_JOINS, config.getReorderJoins().toString());
-//        properties.put(SystemSessionProperties.INITIAL_SPLITS_PER_NODE, config.getInitialSplitsPerNode().toString());
-        properties.put(SystemSessionProperties.SPLIT_CONCURRENCY_ADJUSTMENT_INTERVAL,
-            config.getSplitConcurrencyAdjustmentInterval().toString());
-        properties.put(SystemSessionProperties.OPTIMIZE_METADATA_QUERIES, config.getOptimizeMetadataQueries().toString());
-        properties.put(SystemSessionProperties.QUERY_PRIORITY, config.getQueryPriority().toString());
-        properties.put(SystemSessionProperties.SPILL_ENABLED, config.getSpillEnabled().toString());
-        properties.put(SystemSessionProperties.OPERATOR_MEMORY_LIMIT_BEFORE_SPILL,
-            new Double(config.getOperatorMemoryLimitBeforeSpill().getValue()).toString());
-        properties.put(SystemSessionProperties.OPTIMIZE_DISTINCT_AGGREGATIONS,
-            config.getOptimizeMixedDistinctAggregations().toString());
-        properties.put(SystemSessionProperties.LEGACY_ORDER_BY, config.getLegacyOrderBy().toString());
-        properties.put(SystemSessionProperties.REORDER_WINDOWS, config.getReorderJoins().toString());
-        properties.put(SystemSessionProperties.ITERATIVE_OPTIMIZER, config.getIterativeOptimizerEnabled().toString());
-        properties.put(SystemSessionProperties.EXCHANGE_COMPRESSION, config.getExchangeCompression().toString());
+//        final Map<String, String> properties = new HashMap<>();
+//        properties.put(SystemSessionProperties.OPTIMIZE_HASH_GENERATION, config.getOptimizeHashGeneration().toString());
+//        properties.put(SystemSessionProperties.DISTRIBUTED_JOIN, config.getDistributedJoin().toString());
+//        properties.put(SystemSessionProperties.DISTRIBUTED_INDEX_JOIN, config.getDistributedIndexJoin().toString());
+//        properties.put(SystemSessionProperties.HASH_PARTITION_COUNT, config.getHashPartitionCount().toString());
+//        properties.put(SystemSessionProperties.PREFER_STREAMING_OPERATORS, config.getPreferStreamingOperators().toString());
+//        properties.put(SystemSessionProperties.TASK_WRITER_COUNT, config.getTaskWriterCount().toString());
+//        properties.put(SystemSessionProperties.TASK_CONCURRENCY, config.getTaskConcurrency().toString());
+//        properties.put(SystemSessionProperties.TASK_SHARE_INDEX_LOADING, config.getTaskShareIndexLoading().toString());
+//        properties.put(SystemSessionProperties.QUERY_MAX_MEMORY, config.getMaxQueryMemory().toString());
+//        properties.put(SystemSessionProperties.QUERY_MAX_RUN_TIME, config.getQueryMaxRunTime().toString());
+//        properties.put(SystemSessionProperties.RESOURCE_OVERCOMMIT, config.getResourceOvercommit().toString());
+//        properties.put(SystemSessionProperties.QUERY_MAX_CPU_TIME, config.getQueryMaxCpuTime().toString());
+//        properties.put(SystemSessionProperties.REDISTRIBUTE_WRITES, config.getRedistributeWrites().toString());
+//        properties.put(SystemSessionProperties.PUSH_TABLE_WRITE_THROUGH_UNION, config.getPushTableWriteThroughUnion().toString());
+//        properties.put(SystemSessionProperties.EXECUTION_POLICY, config.getExecutionPolicy());
+//        properties.put(SystemSessionProperties.PROCESSING_OPTIMIZATION, config.getProcessingOptimization());
+//        properties.put(SystemSessionProperties.DICTIONARY_AGGREGATION, config.getDictionaryAggregation().toString());
+//        properties.put(SystemSessionProperties.PLAN_WITH_TABLE_NODE_PARTITIONING, config.getPlanWithTableNodePartitioning().toString());
+//        properties.put(SystemSessionProperties.COLOCATED_JOIN, config.getColocatedJoin().toString());
+//        properties.put(SystemSessionProperties.REORDER_JOINS, config.getReorderJoins().toString());
+////        properties.put(SystemSessionProperties.INITIAL_SPLITS_PER_NODE, config.getInitialSplitsPerNode().toString());
+//        properties.put(SystemSessionProperties.SPLIT_CONCURRENCY_ADJUSTMENT_INTERVAL,
+//            config.getSplitConcurrencyAdjustmentInterval().toString());
+//        properties.put(SystemSessionProperties.OPTIMIZE_METADATA_QUERIES, config.getOptimizeMetadataQueries().toString());
+//        properties.put(SystemSessionProperties.QUERY_PRIORITY, config.getQueryPriority().toString());
+//        properties.put(SystemSessionProperties.SPILL_ENABLED, config.getSpillEnabled().toString());
+//        properties.put(SystemSessionProperties.OPERATOR_MEMORY_LIMIT_BEFORE_SPILL,
+//            new Double(config.getOperatorMemoryLimitBeforeSpill().getValue()).toString());
+//        properties.put(SystemSessionProperties.OPTIMIZE_DISTINCT_AGGREGATIONS,
+//            config.getOptimizeMixedDistinctAggregations().toString());
+//        properties.put(SystemSessionProperties.LEGACY_ORDER_BY, config.getLegacyOrderBy().toString());
+//        properties.put(SystemSessionProperties.REORDER_WINDOWS, config.getReorderJoins().toString());
+//        properties.put(SystemSessionProperties.ITERATIVE_OPTIMIZER, config.getIterativeOptimizerEnabled().toString());
+//        properties.put(SystemSessionProperties.EXCHANGE_COMPRESSION, config.getExchangeCompression().toString());
         return new ClientSessionFactory(uriProvider,
                 config.getPrestoUser(),
                 config.getPrestoSource(),
                 config.getClientInfo(),
                 config.getPrestoCatalog(),
                 config.getPrestoSchema(),
-                properties,
+//                properties,
                 config.isPrestoDebug(),
                 config.getClientSessionTimeout());
     }

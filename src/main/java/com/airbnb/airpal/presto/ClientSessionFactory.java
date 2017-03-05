@@ -10,7 +10,6 @@ import java.net.URI;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.UUID;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 
@@ -38,6 +37,7 @@ public class ClientSessionFactory
         Provider<URI> server,
         String user,
         String source,
+        String clientInfo,
         String catalog,
         String defaultSchema,
         boolean debug,
@@ -47,7 +47,7 @@ public class ClientSessionFactory
         this.server = server;
         this.user = user;
         this.source = source;
-        this.clientInfo = null; // "clientInfoNotSet";
+        this.clientInfo = clientInfo;
         this.catalog = catalog;
         this.defaultSchema = defaultSchema;
         this.debug = debug;
@@ -55,7 +55,7 @@ public class ClientSessionFactory
         this.locale = Locale.getDefault();
         this.properties = ImmutableMap.<String, String>of();
         this.preparedStatements = ImmutableMap.<String, String>of();
-        this.transactionId = null; //UUID.randomUUID().toString();
+        this.transactionId = null;
         this.clientSessionTimeout = firstNonNull(clientSessionTimeout, succinctDuration(1, MINUTES));
     }
 
