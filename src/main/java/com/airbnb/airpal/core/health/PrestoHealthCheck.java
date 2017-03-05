@@ -11,7 +11,6 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -33,38 +32,26 @@ public class PrestoHealthCheck extends HealthCheck
         // number of health check threads, we have the supplier return a Future<Result>. This
         // way, the Future is immediately memoized and all calls will be successful if the
         // future resolved successfully.
-        Supplier<Future<Result>> baseSupplier = new Supplier<Future<Result>>()
-        {
-            @Override
-            public Future<Result> get()
-            {
-                return executorService.submit(new Callable<Result>() {
-                    @Override
-                    public Result call()
-                            throws Exception
-                    {
-                        final List<Object> invalidValue = ImmutableList.of((Object) new Integer(-1));
-                        List<Object> result;
+        Supplier<Future<Result>> baseSupplier = () -> executorService.submit(() -> {
+            final List<Object> invalidValue = ImmutableList.of(-1);
+            List<Object> result;
 
-                        try (StatementClient client = queryRunnerFactory.create().startInternalQuery(HEALTH_CHECK_QUERY)) {
-                            while (client.isValid() && !Thread.currentThread().isInterrupted()) {
-                                Iterable<List<Object>> results = client.current().getData();
-                                if (results != null) {
-                                    result = Iterables.getFirst(results, invalidValue);
-                                    assert(result != null);
-                                    assert(result.size() == 1);
-                                    assert((int)result.get(0) == 1);
-                                }
-                                client.advance();
-                            }
-                            return Result.healthy();
-                        } catch (Exception e) {
-                            throw Throwables.propagate(e);
-                        }
+            try (StatementClient client = queryRunnerFactory.create().startInternalQuery(HEALTH_CHECK_QUERY)) {
+                while (client.isValid() && !Thread.currentThread().isInterrupted()) {
+                    Iterable<List<Object>> results = client.current().getData();
+                    if (results != null) {
+                        result = Iterables.getFirst(results, invalidValue);
+                        assert (result != null);
+                        assert (result.size() == 1);
+                        assert ((int) result.get(0) == 1);
                     }
-                });
+                    client.advance();
+                }
+                return Result.healthy();
+            } catch (Exception e) {
+                throw Throwables.propagate(e);
             }
-        };
+        });
 
         this.resultSupplier = Suppliers.memoizeWithExpiration(baseSupplier, 120, TimeUnit.SECONDS);
     }

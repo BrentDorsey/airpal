@@ -1,5 +1,7 @@
 package com.airbnb.airpal.presto;
 
+import javax.annotation.concurrent.Immutable;
+
 import com.facebook.presto.execution.Column;
 import com.facebook.presto.execution.Input;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -9,14 +11,12 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.hubspot.rosetta.StoredAsJson;
-import lombok.Data;
-import lombok.ToString;
-
-import javax.annotation.concurrent.Immutable;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import lombok.Data;
+import lombok.ToString;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -77,7 +77,7 @@ public class Table
             columns.add(c.getName());
         }
 
-        return new Table(input.getConnectorId(), input.getSchema(), input.getTable(), columns);
+        return new Table(input.getConnectorId().getCatalogName(), input.getSchema(), input.getTable(), columns);
     }
 
     @JsonProperty("fqn")

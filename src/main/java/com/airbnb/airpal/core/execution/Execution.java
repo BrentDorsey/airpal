@@ -1,5 +1,10 @@
 package com.airbnb.airpal.core.execution;
 
+import javax.annotation.Nullable;
+
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+
 import com.airbnb.airpal.api.Job;
 import com.airbnb.airpal.api.JobState;
 import com.airbnb.airpal.api.event.JobUpdateEvent;
@@ -21,6 +26,7 @@ import com.facebook.presto.client.QueryError;
 import com.facebook.presto.client.QueryResults;
 import com.facebook.presto.client.StatementClient;
 import com.facebook.presto.execution.QueryStats;
+import com.facebook.presto.operator.OperatorStats;
 import com.facebook.presto.sql.parser.ParsingException;
 import com.google.common.base.Function;
 import com.google.common.base.Splitter;
@@ -28,15 +34,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.eventbus.EventBus;
 import com.google.common.util.concurrent.RateLimiter;
+
 import io.airlift.units.DataSize;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-
-import javax.annotation.Nullable;
-
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -46,10 +45,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import static java.lang.String.format;
 
 import static com.airbnb.airpal.core.execution.ExecutionClient.ExecutionFailureException;
 import static com.airbnb.airpal.presto.QueryInfoClient.BasicQueryInfo;
-import static java.lang.String.format;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -301,6 +304,7 @@ public class Execution implements Callable<Job>
         DateTime now = DateTime.now();
         io.airlift.units.Duration zeroDuration = new io.airlift.units.Duration(0, TimeUnit.SECONDS);
         DataSize zeroData = new DataSize(0, DataSize.Unit.BYTE);
+        List<OperatorStats> zeroOperatorStats = new ArrayList<>();
 
         return new QueryStats(
                 now,
@@ -330,11 +334,12 @@ public class Execution implements Callable<Job>
                 false,
                 ImmutableSet.of(),
                 zeroData,
-                0,
+                0L,
                 zeroData,
-                0,
+                0L,
                 zeroData,
-                0
+                0L,
+                zeroOperatorStats
         );
 
     }
