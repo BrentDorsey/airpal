@@ -4,7 +4,6 @@ import com.codahale.metrics.health.HealthCheck;
 import com.facebook.presto.client.StatementClient;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
-import com.google.common.base.Throwables;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
@@ -49,7 +48,7 @@ public class PrestoHealthCheck extends HealthCheck
                 }
                 return Result.healthy();
             } catch (Exception e) {
-                throw Throwables.propagate(e);
+                throw new RuntimeException(e);
             }
         });
 

@@ -1,5 +1,9 @@
 package com.airbnb.airpal.core.store.history;
 
+import org.skife.jdbi.v2.DBI;
+import org.skife.jdbi.v2.Handle;
+import org.skife.jdbi.v2.Query;
+
 import com.airbnb.airpal.api.Job;
 import com.airbnb.airpal.presto.Table;
 import com.airbnb.airpal.sql.DbType;
@@ -17,10 +21,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 import com.hubspot.rosetta.jdbi.RosettaResultSetMapperFactory;
-import lombok.extern.slf4j.Slf4j;
-import org.skife.jdbi.v2.DBI;
-import org.skife.jdbi.v2.Handle;
-import org.skife.jdbi.v2.Query;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 
 import static java.lang.String.format;
 
@@ -84,7 +85,7 @@ public class JobHistoryStoreDAO
 
             Map<Long, Job> idToJobMap = query.
                     map(RosettaResultSetMapperFactory.mapperFor(JobTableOutputJoinRow.class)).
-                    fold(new HashMap<Long, Job>(), new JobTableOutputJoinRow.JobFolder());
+                    fold(new HashMap<>(), new JobTableOutputJoinRow.JobFolder());
             return new ArrayList<>(idToJobMap.values());
         }
     }

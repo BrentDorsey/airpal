@@ -304,7 +304,6 @@ public class Execution implements Callable<Job>
         DateTime now = DateTime.now();
         io.airlift.units.Duration zeroDuration = new io.airlift.units.Duration(0, TimeUnit.SECONDS);
         DataSize zeroData = new DataSize(0, DataSize.Unit.BYTE);
-        List<OperatorStats> zeroOperatorStats = new ArrayList<>();
 
         return new QueryStats(
                 now,
@@ -339,7 +338,7 @@ public class Execution implements Callable<Job>
                 0L,
                 zeroData,
                 0L,
-                zeroOperatorStats
+                Collections.<OperatorStats>emptyList()
         );
 
     }
