@@ -23,7 +23,7 @@ public class ClientSessionFactory
     private final String defaultSchema;
     private final String catalog;
     private final String source;
-    private final String clientInfo;
+    //private final String clientInfo;  // presto 0.162 and higher
     private final String user;
     private final Provider<URI> server;
     private final String timeZoneId;
@@ -37,7 +37,7 @@ public class ClientSessionFactory
         Provider<URI> server,
         String user,
         String source,
-        String clientInfo,
+        //String clientInfo,  // presto 0.162 and higher
         String catalog,
         String defaultSchema,
         boolean debug,
@@ -47,7 +47,7 @@ public class ClientSessionFactory
         this.server = server;
         this.user = user;
         this.source = source;
-        this.clientInfo = clientInfo;
+        //this.clientInfo = clientInfo;  // presto 0.162 and higher
         this.catalog = catalog;
         this.defaultSchema = defaultSchema;
         this.debug = debug;
@@ -63,7 +63,7 @@ public class ClientSessionFactory
         Provider<URI> server,
         String user,
         String source,
-        String clientInfo,
+        //String clientInfo,  // presto 0.162 and higher
         String catalog,
         String defaultSchema,
         Map<String, String> properties,
@@ -74,7 +74,7 @@ public class ClientSessionFactory
         this.server = server;
         this.user = user;
         this.source = source;
-        this.clientInfo = clientInfo;
+        //this.clientInfo = clientInfo;  // presto 0.162 and higher
         this.catalog = catalog;
         this.defaultSchema = defaultSchema;
         this.debug = debug;
@@ -90,7 +90,7 @@ public class ClientSessionFactory
         Provider<URI> server,
         String user,
         String source,
-        String clientInfo,
+        //String clientInfo,  // presto 0.162 and higher
         String catalog,
         String defaultSchema,
         Map<String, String> properties,
@@ -102,7 +102,7 @@ public class ClientSessionFactory
         this.server = server;
         this.user = user;
         this.source = source;
-        this.clientInfo = clientInfo;
+        //this.clientInfo = clientInfo;  // presto 0.162 and higher
         this.catalog = catalog;
         this.defaultSchema = defaultSchema;
         this.debug = debug;
@@ -118,7 +118,7 @@ public class ClientSessionFactory
         Provider<URI> server,
         String user,
         String source,
-        String clientInfo,
+        // String clientInfo,  // presto 0.162 and higher
         String catalog,
         String defaultSchema,
         Map<String, String> properties,
@@ -131,7 +131,7 @@ public class ClientSessionFactory
         this.server = server;
         this.user = user;
         this.source = source;
-        this.clientInfo = clientInfo;
+        // this.clientInfo = clientInfo;  // presto 0.162 and higher
         this.catalog = catalog;
         this.defaultSchema = defaultSchema;
         this.debug = debug;
@@ -149,7 +149,7 @@ public class ClientSessionFactory
                 server.get(),
                 user,
                 source,
-                clientInfo,
+                // clientInfo,  // presto 0.162 and higher
                 catalog,
                 schema,
                 timeZoneId,
@@ -168,7 +168,7 @@ public class ClientSessionFactory
                 server.get(),
                 user,
                 source,
-                clientInfo,
+                // clientInfo,  // presto 0.162 and higher
                 catalog,
                 schema,
                 timeZoneId,
@@ -187,7 +187,7 @@ public class ClientSessionFactory
                 server.get(),
                 user,
                 source,
-                clientInfo,
+                // clientInfo,  // presto 0.162 and higher
                 catalog,
                 defaultSchema,
                 timeZoneId,

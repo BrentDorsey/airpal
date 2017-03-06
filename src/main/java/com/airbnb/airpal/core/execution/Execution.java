@@ -26,7 +26,6 @@ import com.facebook.presto.client.QueryError;
 import com.facebook.presto.client.QueryResults;
 import com.facebook.presto.client.StatementClient;
 import com.facebook.presto.execution.QueryStats;
-import com.facebook.presto.operator.OperatorStats;
 import com.facebook.presto.sql.parser.ParsingException;
 import com.google.common.base.Function;
 import com.google.common.base.Splitter;
@@ -337,8 +336,10 @@ public class Execution implements Callable<Job>
                 zeroData,
                 0L,
                 zeroData,
-                0L,
-                Collections.<OperatorStats>emptyList()
+                0L
+                // uncomment below for presto 0.162 and higher
+                //,
+                //Collections.<OperatorStats>emptyList()
         );
 
     }

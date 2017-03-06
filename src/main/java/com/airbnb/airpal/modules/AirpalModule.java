@@ -227,7 +227,7 @@ public class AirpalModule extends AbstractModule
         return new ClientSessionFactory(uriProvider,
                 config.getPrestoUser(),
                 config.getPrestoSource(),
-                config.getClientInfo(),
+                //config.getClientInfo(),  // presto 0.162 and higher
                 config.getPrestoCatalog(),
                 config.getPrestoSchema(),
 //                properties,

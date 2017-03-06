@@ -61,7 +61,7 @@ queries run within the tool.
     Specify Presto version by `-Dairpal.prestoVersion`:
 
     ```
-    ./gradlew -Dairpal.prestoVersion=0.167 clean shadowJar
+    ./gradlew -Dairpal.prestoVersion=0.161 clean shadowJar
     ```
 
 1. Create a MySQL database for Airpal. We recommend you call it `airpal` and will assume that for future steps.
@@ -119,7 +119,7 @@ java -Ddw.prestoCoordinator=http://presto-coordinator-url.com \
 
 Airpal Version | Presto Versions Tested
 ---------------|-----------------------
-0.1            | 0.77, 0.87, 0.167
+0.1            | 0.77, 0.87, 0.161
 
 ## In the Wild
 Organizations and projects using `airpal` can list themselves [here](INTHEWILD.md).
